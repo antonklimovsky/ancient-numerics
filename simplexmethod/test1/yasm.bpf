@@ -1,0 +1,8 @@
+USEUNIT("yasm.cpp");
+USEOBJ("BIG.obj");
+USEOBJ("FLASH.obj");
+USELIB("miracl.LIB");
+//---------------------------------------------------------------------------
+This file is used by the project manager only and should be treated like the project file
+
+main

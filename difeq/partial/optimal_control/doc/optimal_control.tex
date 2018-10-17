@@ -1,0 +1,441 @@
+%%-------------------------------------
+%%
+%%-------------------------------------
+\documentclass[a4paper, 6pt]{article}
+
+\usepackage[cp1251]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{amsfonts}
+
+\title{
+    Численное решение задачи оптимального управления с квадратичным
+    функционалом цели методом дифференциальной прогонки
+}
+\author{А. Климовский}
+\date{13 Мая 2001}
+
+\begin{document}
+
+\maketitle
+
+\section{Постановка задачи}
+
+Рассморим следующую задачу оптимального управления (здесь и далее
+$x(t), \ z_0(t): \mathbb R_+ \mapsto \mathbb R^n $;
+$u(t): \mathbb R_+ \mapsto \mathbb R^m $;
+$A, \ C \in Mat(n, n) $; $B\in Mat(n, m) $; $N \in Mat(m, m) $;
+$ x^0 \in \mathbb R^n$):
+
+\begin{equation}
+\label{eq:functional}
+I(x,u) := \frac{1}{2}\int\limits_0^T{[(C{x(t)-z_0(t)},x(t)-z_0(t))+(Nu(t),u(t))]dt}
+\end{equation}    
+
+\begin{eqnarray}
+\label{eq:ODE}
+& \dot{x} = Ax+Bu, \ t>0, & \\
+& x(0) = x^0. & \nonumber 
+\end{eqnarray}    
+
+Тестовая задача ($ n = m = 2, \ \epsilon = 0.05 $):
+\begin{eqnarray}
+\label{eq:testFunctional}
+& I(x,u) := \frac{1}{2}\int\limits_0^\pi{[u_1^2(t)+u_2^2(t)]dt}, & \\
+\label{eq:testODE1}
+& \dot{x_1} = x_2, & \\
+\label{eq:testODE2}
+& \dot{x_2} = -x_1 + u_1 + u_2, &  \\
+& x^0_1 = 0, & \\
+& x^0_2 = 1. &
+\end{eqnarray}
+
+Таким образом $
+T = \pi $, $
+C =
+\left(
+    \begin{array}{cc}
+        1 & 0 \\
+        0 & 1 \\                
+    \end{array}
+\right) $, $
+N =
+\left(
+    \begin{array}{cc}
+        1 & 0 \\
+        0 & 1 \\                
+    \end{array}
+\right) $, $
+A =    
+\left(
+    \begin{array}{cc}
+        0 & 1 \\
+       -1 & 0 \\                
+    \end{array}
+\right) $, $
+B =
+\left(
+    \begin{array}{cc}
+        0 & 1 \\
+        1 & 2 \\                
+    \end{array}
+\right) $, $
+x^0 =
+\left(
+    \begin{array}{c}
+        1 \\
+        1 \\                
+    \end{array}
+\right).
+$
+
+\section{Краткое изложение метода и вычислительная схема решения}
+
+Выписывая систему уравнений Понтрягина для задачи (\ref{eq:functional}) -
+(\ref{eq:ODE}) можно получить следующую систему уравнений (здесь и далее
+$ D := -BN^{-1}B^* $, $ f(t) := -Cz_0(t)$, $ Q(t) \in Mat(n, n) $,
+$ r(t) \in \mathbb R^n $, $ t \in [0; T] $):
+
+\begin{eqnarray}
+\label{eq:qODE}
+& \dot{Q}+QA+QDQ+A^*Q=-C, & \\
+& Q(T)=0, & \nonumber \\
+\label{eq:rODE}
+& \dot{r}+QDr+A^*r=-f, & \\
+& r(T)=0, & \nonumber \\
+\label{eq:xODE}
+& \dot{x}=(A+DQ)x+Dr, & \\
+& x(0)=x^0, & \nonumber \\
+\label{eq:p}
+& p(t)=Q(t)x+r(t), & \\
+\label{eq:q}
+& u(t)=-N^{-1}B^*p(t). &   
+\end{eqnarray}
+
+В данной работе уравнения (\ref{eq:qODE}) - (\ref{eq:xODE}) решались
+методом Рунге-Кутта 4-го порядка. Для обрашения матриц использовлся
+алгоритм Гаусса с выбором главного элемента.
+
+\section{Результаты счета \label{sec:results}}
+
+Ниже приведен вывод генерируемый программой:
+\small{
+\begin{verbatim}
+Mesh cardinality: 400
+x(0):     1        1       u(0):    -0.267  -7.27 
+x(0.157): 0.459   -0.132   u(0.157): 1.43   -1.63 
+x(0.314): 0.28    -0.253   u(0.314): 1.32   -0.492 
+x(0.471): 0.191   -0.21    u(0.471): 1      -0.226 
+x(0.628): 0.134   -0.156   u(0.628): 0.727  -0.138 
+x(0.785): 0.0957  -0.112   u(0.785): 0.521  -0.0938 
+x(0.942): 0.0683  -0.0804  u(0.942): 0.372  -0.0662 
+x(1.1):   0.0488  -0.0574  u(1.1):   0.266  -0.0471 
+x(1.26):  0.0348  -0.041   u(1.26):  0.19   -0.0336 
+x(1.41):  0.0249  -0.0293  u(1.41):  0.136  -0.0239 
+x(1.57):  0.0178  -0.0209  u(1.57):  0.0968 -0.0171 
+x(1.73):  0.0127  -0.0149  u(1.73):  0.0691 -0.0121 
+x(1.88):  0.00912 -0.0107  u(1.88):  0.0492 -0.0086 
+x(2.04):  0.00656 -0.00761 u(2.04):  0.035  -0.00604 
+x(2.2):   0.00474 -0.00543 u(2.2):   0.0248 -0.00418 
+x(2.36):  0.00347 -0.00387 u(2.36):  0.0175 -0.0028 
+x(2.51):  0.0026  -0.00276 u(2.51):  0.0121 -0.00174 
+x(2.67):  0.00202 -0.00196 u(2.67):  0.00813-0.000885 
+x(2.83):  0.00167 -0.00139 u(2.83):  0.00508-0.00017 
+x(2.98):  0.0015  -0.00101 u(2.98):  0.00256 0.000342 
+x(3.14):  0.0014  -0.00092 u(3.14):  0       0 
+Optimal value of the functional: 0.184
+\end{verbatim}
+}
+
+\section{Приложение: исходные тексты программы}
+
+\small{
+\begin{verbatim}
+//----------------------------------------------
+// Solves folowing optimal control task
+//
+// \begin{equation}
+// \label{eq:func}
+// I(x,u) := \frac{1}{2}\int_0^T{[(C{x(t)-z_0(t)},
+//           x(t)-z_0(t))+(Nu(t),u(t))]dt} \\
+// \end{equation}
+//
+// \begin{eqnarray}
+// \label{eq:pde}
+// & \dot{x} = Ax+Bu, \ t>0 & \\
+// & x(0) = x_0. & \nonumber
+// \end{eqnarray}
+//
+// Author: A. Klimovsky, root@ludus.kharkiv.com
+//----------------------------------------------
+#include <iostream.h>
+#include <math.h>
+
+#include "lin_alg.h"
+#include "gauss.h"
+
+//-------------------------------------------
+// Global data
+//-------------------------------------------
+//----------- input parameters
+double T = M_PI;
+double eps = 0.05;
+int nn = 2;            // system state vector dimension
+int mm = 2;            // control vector dimension
+long int nnn = 20;     // output mesh cardinality
+long int p;            // current mesh cardinality
+double h;              // step between nodes of the mesh
+matrix c;
+matrix n;
+matrix a;
+matrix b;
+vector x0;
+//----------- calculated variables
+vector xOld;
+matrix d;
+matrix nInv;
+matrix aTransp;
+matrix* q;
+vector* r;
+vector* x;
+vector* u;
+double functional;
+
+//---------------------------------------------------------------
+// Runge-Kutta method implementation
+//
+// @param T* x -- should point to sufficient memory area BEFORE
+//                invocation of the function.
+//---------------------------------------------------------------
+template<class T>
+void rungeKutt(
+    double h,
+    long int n,
+    double t0,
+    T x0,
+    T (*f)(double, T),
+    T* x
+)
+{
+    T k0, k1, k2, k3;
+    int i;
+    double t;
+
+    if (h > 0) {
+        x[0] = x0;
+        for (i = 1, t = t0; i < n; i++, t += h) {
+            k0 = h*(*f)(t, x[i-1]);
+            k1 = h*(*f)(t+h/2, x[i-1]+k0/2);
+            k2 = h*(*f)(t+h/2, x[i-1]+k1/2);
+            k3 = h*(*f)(t+h, x[i-1]+k2);
+            x[i] = x[i-1]+(k0+2*k1+2*k2+k3)/6;
+        }
+    } else {
+        x[n-1] = x0;
+        for (i = n-2, t = t0; i >= 0; i--, t += h) {
+            k0 = h*f(t, x[i+1]);
+            k1 = h*f(t+h/2, x[i+1]+k0/2);
+            k2 = h*f(t+h/2, x[i+1]+k1/2);
+            k3 = h*f(t+h, x[i+1]+k2);
+            x[i] = x[i+1]+(k0+2*k1+2*k2+k3)/6;
+        }
+    }
+}
+
+void init()
+{
+    double myC[] = {
+        1, 0,
+        0, 1
+    };
+    double myN[] = {
+        eps*1, eps*0,
+        eps*0, eps*1
+    };
+    double myA[] = {
+        0, 1,
+       -1, 0
+    };
+    double myB[] = {
+        0, 1,
+        1, 2
+    };
+    double myX0[] = {1, 1};
+
+    c = matrix(nn, nn, myC);
+    n = matrix(mm, mm, myN);
+    a = matrix(nn, nn, myA);
+    b = matrix(mm, mm, myB);
+    x0 = vector(nn, myX0);
+    nInv = calculate_inverse_matrix(n);
+    d = -b*nInv*b.transpose();
+    aTransp = a.transpose();
+}
+
+vector z0(double t)
+{
+    vector temp(nn);
+
+    temp[0] = 0;
+    temp[1] = 0;
+
+    return temp;
+}
+
+//--------------------
+// Utility function f
+//--------------------
+vector f(double t)
+{
+    return -c*z0(t);
+}
+
+long int fix(double t)
+{
+    long int result;
+
+    result = t/h;
+    if (result < 0)
+        result = 0;
+    if (result >= p)
+        result = p-1;
+
+    return result;
+}
+
+//----------------------------------
+// r.h.s. of ODE for q (q'=fq(t,q))
+//----------------------------------
+matrix fq(double t, matrix q)
+{
+    return -(q*(a+d*q)+c+aTransp*q);
+}
+
+//----------------------------------
+// r.h.s. of ODE for r (r'=fr(t,r))
+//----------------------------------
+vector fr(double t, vector r)
+{
+    return -((q[fix(t)]*d+aTransp)*r+f(t));
+}
+
+//----------------------------------
+// r.h.s. of ODE for x (x'=fx(t,x))
+//----------------------------------
+vector fx(double t, vector x)
+{
+    return (a+d*q[fix(t)])*x+d*r[fix(t)];
+}
+
+void calcQ()
+{
+    matrix zero(nn, mm);
+    int i, j;
+
+    for (i = 0; i < nn; i++)
+        for (j = 0; j < mm; j++)
+            zero[i][j] = 0;
+
+    q = new matrix[p+1];
+    rungeKutt(-h, p+1, T, zero, fq, q);
+}
+
+void calcR()
+{
+    vector zero(nn);
+    int i;
+
+    for (i = 0; i < nn; i++)
+        zero[i] = 0;
+
+    r = new vector[p+1];
+    rungeKutt(-h, p+1, T, zero, fr, r);
+}
+
+void calcX()
+{
+    x = new vector[p+1];
+    rungeKutt(h, p+1, 0.0, x0, fx, x);
+}
+
+void calcU()
+{
+    matrix temp;
+    long int i;
+
+    temp = -nInv*b.transpose();
+    u = new vector[p+1];
+    for (i = 0; i < p+1; i++)
+        u[i] = temp*(q[i]*x[i]+r[i]);
+}
+
+void calcFunctional()
+{
+    long int i;
+    double t;
+
+    functional = 0;
+    for (i = 0, t = 0; i < p; i++, t += h)
+        functional += ((c*(x[i]-z0(t)))*(x[i]-z0(t))+
+                       (n*u[i])*(u[i]))*h;
+    functional /= 2;
+}
+
+void iterate()
+{
+    h = T/p;
+    calcQ();
+    calcR();
+    calcX();
+}
+
+void output()
+{
+    long int i;
+    long int step;
+
+/*    cout.setf(ios_base::fixed, ios_base::floatfield);*/
+    cout.precision(3);
+
+    cout << "Mesh cardinality: " << p << endl;
+    step = p/nnn;
+    for (i = 0; i < p+1; i += step) {
+        cout << "x(" << i*h << ")" << ": " << x[i];
+        cout << "u(" << i*h << ")" << ": " << u[i] << endl;
+    }
+    cout << "Optimal value of the functional: " << functional  << endl;
+}
+
+void destroy()
+{
+    delete [] q;
+    delete [] r;
+    delete [] x;
+    delete [] u;
+}
+
+void main()
+{
+    init();
+    p = nnn*10;
+    iterate();
+    xOld = x[p-1];
+    while (1) {
+        destroy();
+        p <<= 1;
+        iterate();
+        if (abs(x[p-1]-xOld) > eps)
+            xOld = x[p-1];
+        else {
+            calcU();
+            calcFunctional();
+            output();
+            destroy();
+            break;
+        }
+    }
+}
+\end{verbatim}
+}
+
+\end{document}

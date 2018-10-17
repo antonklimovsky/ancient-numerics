@@ -1,0 +1,37 @@
+# Input data file for YASM - the Yet Another Simplex Method implementation
+#
+# Author: A. Klimovsky, root@ludus.kharkiv.com
+# All rights reserved
+#
+# YASM solves the folowing task (hereinafter dim c = n, dim A = mxn, dim b = n,
+# (*,*) means standard dot-product in R^n) in the field of rational numbers:
+#
+#   (c,x)->min
+#   Ax = b
+#   x >= 0
+#
+# Some comments on format of the file:
+#
+#   If line starts by sharp ('#') it's considered as a comment.
+#   Lexemes may be separated by tabs and spaces (but not by newlines!).
+#
+# BNF:
+#
+#   <valid_YASM_input_file> ::= <matrixA> <vectorB> <vectorC>
+#   <matrixA> ::= '[' 'A' ']' newline <vectors> newline
+#   <vectorB> ::= '[' 'b' ']' newline <vector> newline
+#   <vectorC> ::= '[' 'c' ']' newline <vector> <end>
+#   <vectors> ::= 1*(<vector>)
+#   <vector> ::= 1*(<rational>)
+#   <rational> ::= signed_integer |
+#                  signed_integer '/' signed_integer
+#   <end> ::= newline |
+#             eof
+#
+[A]
+1 -1 1 0
+2  1 0 1
+[b]
+2 6
+[c]
+-3 -2 0 0

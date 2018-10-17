@@ -1,0 +1,117 @@
+This is TeX, Version 3.14159 (MiKTeX 2) (preloaded format=latex 2000.11.28)  22 MAY 2001 16:10
+**optimal_control.tex
+(optimal_control.tex
+LaTeX2e <2000/06/01>
+Babel <v3.6Z> and hyphenation patterns for english, french, german, ngerman, ru
+ssian, dumylang, nohyphenation, loaded.
+(C:\Program Files\MiKTeX\tex\latex\base\article.cls
+Document Class: article 2000/05/19 v1.4b Standard LaTeX document class
+(C:\Program Files\MiKTeX\tex\latex\base\size10.clo
+File: size10.clo 2000/05/19 v1.4b Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(C:\Program Files\MiKTeX\tex\latex\base\inputenc.sty
+Package: inputenc 2000/07/01 v0.996 Input encoding file 
+
+(C:\Program Files\MiKTeX\tex\latex\cyrillic\cp1251.def
+File: cp1251.def 1999/11/16 v1.0d Input encoding file
+))
+(C:\Program Files\MiKTeX\tex\latex\base\fontenc.sty
+Package: fontenc 2000/08/30 v1.91 Standard LaTeX package
+
+(C:\Program Files\MiKTeX\tex\latex\cyrillic\t2aenc.def
+File: t2aenc.def 2000/05/03 v1.0d Cyrillic encoding definition file
+)
+LaTeX Font Info:    Try loading font information for T2A+cmr on input line 96.
+
+(C:\Program Files\MiKTeX\tex\latex\cyrillic\t2acmr.fd
+File: t2acmr.fd 1999/01/07 v1.0 Computer Modern Cyrillic font definitions
+))
+(C:\Program Files\MiKTeX\tex\latex\cyrillic\babel.sty
+Package: babel 1998/03/24 v3.6j The Babel package
+
+(C:\Program Files\MiKTeX\tex\latex\cyrillic\russianb.ldf
+File: russianb.ldf 1998/09/10 v1.1g Russian support from the babel system
+
+(C:\Program Files\MiKTeX\tex\latex\cyrillic\babel.def
+File: babel.def 1998/03/24 v3.6j Babel common definitions
+\babel@savecnt=\count87
+\U@D=\dimen103
+)
+Package babel Info: Making " an active character on input line 260.
+
+
+! LaTeX Error: Unknown symbol font `T2Aletters'.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                      
+                                          
+l.327 ...mathrm{\cyrillicencoding letters}
+                                          
+? 
+LaTeX Font Info:    Overwriting math alphabet `\cyrmathsf' in version `bold'
+(Font)                  T2A/cmss/m/n --> T2A/cmss/bx/n on input line 337.
+LaTeX Font Info:    Overwriting math alphabet `\cyrmathit' in version `bold'
+(Font)                  T2A/cmr/m/it --> T2A/cmr/bx/it on input line 339.
+)) (C:\Program Files\MiKTeX\tex\latex\amsfonts\amsfonts.sty
+Package: amsfonts 1997/09/17 v2.2e
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 133.
+)
+
+LaTeX Warning: Unused global option(s):
+    [6pt].
+
+(optimal_control.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T2A/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Try loading font information for U+msa on input line 20.
+ (C:\Program Files\MiKTeX\tex\latex\amsfonts\umsa.fd
+File: umsa.fd 1995/01/05 v2.2e AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 20.
+
+(C:\Program Files\MiKTeX\tex\latex\amsfonts\umsb.fd
+File: umsb.fd 1995/01/05 v2.2e AMS font definitions
+)
+Overfull \hbox (5.86874pt too wide) in paragraph at lines 92--92
+[]\T2A/cmr/bx/n/14.4 Краткое изложение метода и вычислительная
+ []
+
+[1
+
+]
+LaTeX Font Info:    Try loading font information for T2A+cmtt on input line 123
+.
+ (C:\Program Files\MiKTeX\tex\latex\cyrillic\t2acmtt.fd
+File: t2acmtt.fd 1999/01/07 v1.0 Computer Modern Cyrillic font definitions
+) [2] [3] [4]
+[5] [6] [7] [8] (optimal_control.aux) )
+Output written on optimal_control.dvi (8 pages, 13496 bytes).

@@ -1,0 +1,265 @@
+%%-------------------------------------
+%%
+%%-------------------------------------
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage[cp1251]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{amsfonts}
+
+\usefont{T2A}{tnr}{m}{n} 
+
+\title{
+    Многомерная минимизация с ограничениями. Метод наискорейшего спуска,
+    метод внешних штрафов.
+}
+\author{А. Климовский}
+\date{13 Мая 2001}
+
+\begin{document}
+
+\maketitle
+
+\section{Постановка задачи}
+
+Рассмотрим следующую задачу на условный минимум (здесь и далее
+$ f(x)$, $ h_i(x): \mathbb R^n \mapsto \mathbb R $, $ i = 1, \dots, m $):
+
+\begin{equation}
+    \label{eq:minTask}
+    \min_{h_i(x) \leq 0, \atop i = 1, \dots, m}{f(x)} = \ ?
+\end{equation}    
+
+Тестовая задача:
+\begin{equation}
+    \label{eq:testMinTask}
+    \min_{h_i(x) \leq 0, \atop  i = 1, \dots, 3}{x^2+5y^2} = \ ?,
+\end{equation}
+\begin{eqnarray}
+    & h_1(x) := (x-2)^2+(y-3)^2-16, & \\
+    & h_2(x) := (x-2)^2+2-y, & \\
+    & h_3(x) := y-4. & 
+\end{eqnarray}
+
+\section{Краткое изложение метода и вычислительная схема решения}
+
+\subsection{Метод внешних штрафов}
+
+Введем в рассмотрение функцию $ W(t, x): [0;+\infty) \times \mathbb R^n \mapsto [0;+\infty) $
+(\emph{внешний штраф})
+такую, что (здесь и далее $ D := \{x \in \mathbb R^n\ | h_i(x) \leq 0, \ i = 1, \dots, m \} $):
+\begin{enumerate}
+\item $ W(t,x) $ - выпукла, $ W(t,x) \in C^1([0;+\infty) \times \mathbb R^n) $;
+\item $ \forall x \in D, \ \forall t \geq 0 : W(t, x) = 0$;
+\item $ \forall x \in \mathbb R^n \setminus D : \lim_{t \rightarrow +\infty}W(t, x) = +\infty $. 
+\end{enumerate}
+
+Далее, рассмотрим функцию $ \tilde{f}(x) := f(x)+W(t,x) $. Тогда, при некоторых
+условиях на функции $ f(x), h_i(x), \ i = 1, \dots, m $ решение $ x^0_t $
+задачи на \\ безусловный минимум
+
+\begin{equation}
+    \label{eq:nonConstrMin}
+    \min_{x \in \mathbb R^n}{\tilde{f}(x)} = \ ?    
+\end{equation}
+
+при $ t \rightarrow + \infty $ стремится к решению задачи (\ref{eq:minTask}).
+
+\subsection{Метод наискорейшего спуска}
+
+Рассмотрим метод решения уравнения (\ref{eq:nonConstrMin}). Для этого
+выберем начальное приближение $ x_0 $. А дальнейшие приближения
+$ \{x_i\}_{i=1}^n $ к решению будем получать следующим образом. Положим
+
+\begin{equation}
+    \label{eq:functional}
+    g_i(\alpha) := f(x_i-\alpha \nabla f(x_0)), \ \alpha \geq 0   
+\end{equation}
+
+Далее, найдем решение одномерной задачи
+
+\begin{equation}
+    \label{eq:steepestDescentTask}
+    \min_{\alpha \in [0;+\infty)} g_i(\alpha)   
+\end{equation}
+
+и обозначим его $ \alpha_i^0 $, тогда
+
+\begin{equation}
+    \label{eq:steepestDescentStep}
+    x_{i+1} := x_i - \alpha_i^0 \nabla f(x_0). 
+\end{equation}
+
+В данной работе $ W(t,x) $ выбиралось равным $ t\sum_{i=1}^3{(h^i_+)^2(x)} $
+(здесь $ h^i_+(x) := \frac{h_i(x)+|h_i(x)|}{2} $), производные в
+(\ref{eq:functional}) вычислялись с точностью до $ O(\epsilon^2) $, где
+$ \epsilon $ --- заданная точность, а решение задачи
+(\ref{eq:steepestDescentTask}) вычислялось методом деления пополам.
+
+\section{Результаты счета \label{sec:results}}
+
+Ниже приведен вывод генерируемый программой:
+\small{
+    \begin{verbatim}
+5 iterations done...
+x: 1.86645, y: 2.01781, f(x, y): 23.8414, penalty(x, y): 0.000642477
+gradX: -2.69774 gradY: -58.3814
+    \end{verbatim}
+}
+
+\section{Приложение: исходные тексты программы}
+
+\small{
+    \begin{verbatim}
+//-------------------------------------------------
+// Multidimesional constrained minimization.
+//
+// Steepest descent method with outer penalties.
+//
+// Author: Anton Klimovsky, root@ludus.kharkiv.com
+//-------------------------------------------------
+#include <iostream.h>
+#include <math.h>
+
+const double eps = 1e-4;
+const double tBoundary = 20;
+const double T = 1.0e+6;
+const double maxIterations = 1000;
+
+inline double sqr(double x)
+{
+    return x*x;
+}
+
+double h1(double x, double y)
+{
+    return sqr(sqr(x-2))+sqr(sqr(y-3))-16;
+}
+
+double h2(double x, double y)
+{
+    return sqr(x-2)+2-y;
+}
+
+double h3(double x, double y)
+{
+    return y-4;
+}
+
+double f(double x, double y)
+{
+    return sqr(x)+5*sqr(y);
+}
+
+inline double truncate(double x)
+{
+    return (x > 0)? sqr(x) : 0;
+}
+
+double penalty(double x, double y, double T)
+{
+    return T*(truncate(h1(x, y))+
+              truncate(h2(x, y))+
+              truncate(h3(x, y)));
+}
+
+double f0(double x, double y)
+{
+    return f(x, y)+penalty(x, y, T);
+}
+
+class G {
+    double x;
+    double y;
+    double dirX;
+    double dirY;
+
+public:
+    G(double x0, double y0, double dirX0, double dirY0):
+        x(x0),
+        y(y0),
+        dirX(dirX0),
+        dirY(dirY0)
+    {}
+    double operator() (double t)
+    {
+        return f0(x-dirX*t, y-dirY*t);
+    }
+};
+
+template<class F> void dihotomy(
+    double a,
+    double b,
+    F f,
+    double eps,
+    double* x0
+)
+{
+    double c;
+
+    while ((b-a) > eps) {
+        c = (a+b)/2;
+        if (f((a+c)/2) < f((c+b)/2))
+            b = c;
+        else
+            a = c;
+    }
+    *x0 = c;
+}
+
+void calc()
+{
+    double oldX;
+    double oldY;
+    double newX;
+    double newY;
+    double t0;
+    double gradX;
+    double gradY;
+    double norm;
+    long int i;
+
+    newX = 2;
+    newY = 3;
+    i = 0;
+    do {
+        i++;
+
+        oldX = newX;
+        oldY = newY;
+
+        gradX = (f0(oldX+eps, oldY)-f0(oldX-eps, oldY))/(2*eps);
+        gradY = (f0(oldX, oldY+eps)-f0(oldX, oldY-eps))/(2*eps);
+
+        norm = sqrt(sqr(gradX)+sqr(gradY));
+
+        gradX /= norm;
+        gradY /= norm;
+
+        dihotomy(0, tBoundary, G(oldX, oldY, gradX, gradY), eps, &t0);
+
+        newX = oldX-t0*gradX;
+        newY = oldY-t0*gradY;
+    }
+    while (fabs(newX-oldX)+fabs(newY-oldY) > eps && i < maxIterations);
+
+    cout << i << " iterations done..." << endl;
+
+    cout << "x: " << newX << ", y: " << newY <<
+         ", f(x, y): " << f(newX, newY) <<
+         ", penalty(x, y): " << penalty(newX, newY, T) << endl;
+
+    gradX = (f0(newX+eps, oldY)-f0(newX-eps, newY))/(2*eps);
+    gradY = (f0(newX, newY+eps)-f0(newX, newY-eps))/(2*eps);
+    cout << "gradX: " << gradX << " gradY: " << gradY << endl;
+}
+
+void main()
+{
+    calc();
+}
+    \end{verbatim}
+}
+
+\end{document}
