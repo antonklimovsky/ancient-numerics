@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------
 // Implementation of Gauss algorithm with selection of the primary element
-// for reversing the matrix.
+// for inverting a matrix.
 //
 // Author: Anton Klimovsky, root@ludus.kharkiv.com
 //--------------------------------------------------------------------------
