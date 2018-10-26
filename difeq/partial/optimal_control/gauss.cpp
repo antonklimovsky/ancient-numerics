@@ -2,7 +2,8 @@
 // Implementation of the Gauss algorithm with selection of the primary element
 // for inverting a matrix.
 //
-// Author: Anton Klimovsky, root@ludus.kharkiv.com
+// Author: Anton Klimovsky
+// https://www.aklimovsky.net
 //--------------------------------------------------------------------------
 #include <iostream.h>
 #include <string.h>
@@ -66,6 +67,7 @@ matrix calculate_inverse_matrix(matrix& a)
 // Let's check if the last row is a zero vector
     if (fabs(b[i][i]) <= EPS) {
         cout << "Overflow or singular matrix.\n";
+        // FIXME: Raise exception here
         exit(1);
     }
 
