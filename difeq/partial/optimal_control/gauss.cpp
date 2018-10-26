@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------
-// Implementation of Gauss algorithm with selection of the primary element
+// Implementation of the Gauss algorithm with selection of the primary element
 // for inverting a matrix.
 //
 // Author: Anton Klimovsky, root@ludus.kharkiv.com
