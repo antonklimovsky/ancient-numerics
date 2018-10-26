@@ -120,7 +120,7 @@ void MeshMethod::solveDifEq()
 	char ch;
 	Matrix oldU(n+1), newU(n+1);
 
-	hX = eq.a/n; // let's calculate the "smoothness" of mesh
+	hX = eq.a/n; // let's calculate the granularity of the mesh
 	hY = eq.b/k;
 	hT = eq.T/m;
 
