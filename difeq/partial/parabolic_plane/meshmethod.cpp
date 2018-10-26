@@ -4,9 +4,10 @@
 //  u'=Laplace(u)+px*u'+py*u'+q*u+f                           //
 //   t                x     y                                 //
 //                                                            //
-//	in the rectangle.                                         //
+// in a rectangular domain with Neumann or Dirichle           //
+// boundary conditions.                                       //
 //                                                            //
-//  Author: A. Klimovsky                                      //
+// Author: A. Klimovsky                                       //
 //------------------------------------------------------------//
 #include <iostream.h>
 #include <math.h>
