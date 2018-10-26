@@ -78,7 +78,7 @@ double Galerkin::distance(double* newu, double *oldu)
 
 void Galerkin::fillLinearSystem(
     LinearSystem* ls,
-    long int n // n+1 = number of terms in the Galerkin's expansion 
+    long int n // n+1 = number of terms in Galerkin's expansion 
 )
 {
     double x;
@@ -167,13 +167,13 @@ void Galerkin::solve()
             delete [] oldY;
         oldY = newY;
 
-// let's double the smoothness of the mesh
+// let's double the granularity of the mesh
         m <<= 1;
         newY = solveDifEq(m);
     } while (distance(newY, oldY) >= eq.eps);
 
 // Output of results
-// It shouldn't be here!
+// FIXME: It shouldn't be here!
 
     cout << "\nObtained results (number of terms in the Galerkin's expansion = "
         << m+1 << "):\n";
